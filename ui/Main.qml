@@ -57,6 +57,7 @@ ApplicationWindow {
 
     Settings {
         id: settingsDialog
+        themes: theme
     }
 
     ListModel { id: suggestionsModel }

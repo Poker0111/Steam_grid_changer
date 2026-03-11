@@ -3,11 +3,13 @@ import QtQuick.Controls
 
 Window {
     id: settingsRoot
+    required property var themes
     width: 450
     height: 350
     title: "Ustawienia"
-    color: "#1a1a1b"
+    color: themes.back_second
     modality: Qt.ApplicationModal
+
 
     Column {
         anchors.centerIn: parent
@@ -17,13 +19,14 @@ Window {
         Label {
             text: "Konfiguracja SteamGrid"
             font.pixelSize: 20
+            font.bold: true
             color: "white"
         }
 
         Column {
             width: parent.width
             spacing: 5
-            Label { text: "API Key:"; color: "#afafaf" }
+            Label { text: "API Key:"; color: theme.font }
             TextField {
                 id: apiKeyField
                 width: parent.width
