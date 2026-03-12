@@ -53,6 +53,10 @@ qt_add_qml_module(appSteamUI
         ui/CsButton.qml
         ui/Settings.qml
         ui/Progress.qml
+        ui/Fonts.qml
+    RESOURCES
+        fonts/Inter.ttf
+        fonts/Inter-Bold.ttf
 )
 
 target_link_libraries(appSteamUI PRIVATE 

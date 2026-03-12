@@ -4,7 +4,7 @@ import QtQuick.Layouts
 
 ApplicationWindow {
     id: root
-    width: 800
+    width: 900
     height: 600
     minimumWidth: 650
     minimumHeight: 400
@@ -12,6 +12,7 @@ ApplicationWindow {
     title: qsTr("SteamUI")
 
     Theme { id: theme }
+    Fonts{id: fonts}
 
     background: Rectangle { color: theme.back }
 

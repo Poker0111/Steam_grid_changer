@@ -17,4 +17,5 @@ QtObject {
     readonly property color button_hover2: "#333e4c"
     readonly property color button_click2: "#5cacda"
     readonly property color frame: "#333e4c"
+    readonly property color textfield_c: "#16202d"
 }

@@ -2,13 +2,18 @@ import QtQuick
 import QtQuick.Controls
 
 Window {
+
+    Theme { id: theme }
+
     id: progressRoot
-    width: 450
-    height: 180
+    width: 375
+    height: 150
     title: "Synchronizacja"
-    color: "#1a1a1b"
+    color: theme.back_second
     modality: Qt.ApplicationModal
-    flags: Qt.Window | Qt.WindowTitleHint
+    flags: Qt.Window | Qt.WindowTitleHint | Qt.MSWindowsFixedSizeDialogHint
+
+    
 
     Column {
         anchors.centerIn: parent
@@ -29,15 +34,15 @@ Window {
             to: 1
             value: 0
             background: Rectangle {
-                implicitHeight: 6
-                color: "#333333"
+                implicitHeight: 8
+                color: theme.frame
                 radius: 3
             }
             contentItem: Item {
                 Rectangle {
                     width: control.visualPosition * parent.width
                     height: parent.height
-                    color: "#1b92d1"
+                    color: theme.border_cilick
                     radius: 3
                 }
             }
@@ -57,7 +62,7 @@ Window {
 
         Label {
             text: (control.value * 100).toFixed(0) + "%"
-            color: "#888888"
+            color: theme.font
             anchors.horizontalCenter: parent.horizontalCenter
         }
     }
