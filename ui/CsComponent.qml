@@ -3,7 +3,6 @@ import QtQuick.Controls
 
 Item {
     id: root
-    // Szerokości bazowe dla każdego typu
     width: {
         if (type === "heroes") return 360;
         if (type === "icons") return 160;
@@ -36,7 +35,6 @@ Item {
             width: parent.width
             spacing: 0
 
-            // --- SEKCJA OBRAZKA Z RAMKĄ ---
             Rectangle {
                 width: parent.width
                 // POPRAWIONA LOGIKA WYSOKOŚCI:
@@ -45,7 +43,6 @@ Item {
                     if (root.type === "heroes") return width * 0.5;
                     if (root.type === "icons") return width;
                     if (root.type === "logos") {
-                        // Jeśli logo jest załadowane, dostosuj do jego proporcji, ale max 150px
                         return coverImage.status === Image.Ready 
                             ? Math.min(width * (coverImage.implicitHeight / coverImage.implicitWidth), 150)
                             : 100;
@@ -54,7 +51,6 @@ Item {
                 }
                 color: "transparent"
                 
-                // Wewnętrzna ramka "pudełkowa"
                 Rectangle {
                     anchors.fill: parent
                     anchors.margins: root.type === "logos" ? 5 : 12 // Mniejszy margines dla logos
@@ -64,19 +60,20 @@ Item {
                     border.width: 2
                     clip: true
 
-                    Image {
+                    AnimatedImage {
                         id: coverImage
                         anchors.fill: parent
-                        // Fit dla logos i icons (żeby nie ucinało liter), Crop dla reszty
                         fillMode: (root.type === "logos" || root.type === "icons") 
                                   ? Image.PreserveAspectFit 
                                   : Image.PreserveAspectCrop
                         asynchronous: true
+                        
+                        playing: hoverHandler.hovered
+                        currentFrame: playing ? currentFrame : 0 
                     }
                 }
             }
 
-            // --- SEKCJA PRZYCISKU ---
             Rectangle {
                 width: parent.width
                 height: 60

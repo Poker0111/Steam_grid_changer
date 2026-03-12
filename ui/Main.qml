@@ -268,6 +268,11 @@ ApplicationWindow {
                 type: "logos"
                 imageSource:"https://cdn2.steamgriddb.com/logo/2b2e7393b05b5b52af65bf2ed7f4ad4f.png"
                 }*/
+                CsComponent{
+                    id:combo4
+                    type:"grid"
+                    imageSource:"https://cdn2.steamgriddb.com/grid/51f993d243a0d38e4669ac0bc3f8df05.webp"
+                }
             }
         }
     }
