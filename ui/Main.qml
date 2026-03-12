@@ -42,9 +42,8 @@ ApplicationWindow {
             updateModel();
         }
         function onCacheExistsChanged() {
-            if (steamGrid.cacheExists) {
-                console.log("Biblioteka została pomyślnie zaktualizowana!");
-            }
+            //if (steamGrid.cacheExists) {
+          //  }
         }
     }
 
@@ -190,7 +189,7 @@ ApplicationWindow {
                                 }
                             }
                         }
-                    } // Koniec Popup
+                    }
                 }
 
                 ComboBox {
