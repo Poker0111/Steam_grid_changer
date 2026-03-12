@@ -22,10 +22,8 @@ Window {
         Label {
     text: "Konfiguracja SteamGrid"
     font.family: styleFonts.bold
-    font.pixelSize: 24 // Odrobinę większy nagłówek
+    font.pixelSize: 24 
     color: themes.font_click
-    
-    // Najlepsze ustawienie dla Windowsa i ciemnego tła:
     
     }
 
@@ -35,8 +33,8 @@ Window {
             Label {
     text: "API Key:"
     font.family: styleFonts.regular
-    font.pixelSize: 13 // Steam używa małych, ale wyraźnych fontów
-    font.weight: Font.Medium // <--- To zrobi różnicę na ciemnym tle
+    font.pixelSize: 13 
+    font.weight: Font.Medium
     color: themes.font // Nieco jaśniejszy szary niż #afafaf
     
     
@@ -68,9 +66,9 @@ Window {
             Label {
     text: "Ścieżka:"
     font.family: styleFonts.regular
-    font.pixelSize: 13 // Steam używa małych, ale wyraźnych fontów
-    font.weight: Font.Medium // <--- To zrobi różnicę na ciemnym tle
-    color: themes.font // Nieco jaśniejszy szary niż #afafaf
+    font.pixelSize: 13
+    font.weight: Font.Medium
+    color: themes.font 
     
     
 }

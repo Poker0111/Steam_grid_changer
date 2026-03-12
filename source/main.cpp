@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
    
     QGuiApplication app(argc, argv);
     QQuickStyle::setStyle("Basic");
+    app.setWindowIcon(QIcon(":/SteamApp/resources/placeholder.ico"));
 
     SteamGrid sg;
     sg.init();
