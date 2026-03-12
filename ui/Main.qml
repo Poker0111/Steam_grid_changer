@@ -244,10 +244,30 @@ ApplicationWindow {
             Layout.fillWidth: true
             Layout.fillHeight: true
             color: theme.back
-            Text {
-                anchors.centerIn: parent
-                text: "Library Content"
-                color: theme.font
+            
+        RowLayout{
+            spacing:10
+            /*test
+            CsComponent{
+                id:combo
+                type: "grid"
+                imageSource:"https://cdn2.steamgriddb.com/grid/e8a68217f2c512a63bac2f9244d9c1b5.png"
+                }
+                CsComponent{
+                id:combo1
+                type: "heroes"
+                imageSource:"https://cdn2.steamgriddb.com/hero/09a824a09b7734ea1cfd2f9a34dedbfd.jpg"
+                }
+                CsComponent{
+                id:combo2
+                type: "icons"
+                imageSource:"https://cdn2.steamgriddb.com/icon/6374e3ddc6da019b8d63d803662c47e7.png"
+                }
+                CsComponent{
+                id:combo3
+                type: "logos"
+                imageSource:"https://cdn2.steamgriddb.com/logo/2b2e7393b05b5b52af65bf2ed7f4ad4f.png"
+                }*/
             }
         }
     }

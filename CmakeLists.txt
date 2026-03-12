@@ -53,6 +53,7 @@ qt_add_qml_module(appSteamUI
         ui/Settings.qml
         ui/Progress.qml
         ui/Fonts.qml
+        ui/CsComponent.qml
     RESOURCES
         resources/messages.json
         fonts/Inter.ttf
