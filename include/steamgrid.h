@@ -34,7 +34,7 @@ signals:
     void progressChanged(double percent);
 
 private:
-    void writeCacheToFile();
+    void writeCache();
     void readCache();
     int getNameBySteamId(std::string id, std::string *name);
 

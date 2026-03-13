@@ -21,17 +21,18 @@ void SteamGrid::reload() {
     });
 }
 
-void SteamGrid::writeCacheToFile() {
+void SteamGrid::writeCache() {
     std::ofstream file(m_cacheFile.toStdString(), std::ios::trunc);
     if (!file.is_open()) return;
 
-    for (const auto& item : m_gamesModel) {
+    file << "PATH=" << m_path.toStdString() << "\n";
+    file << "API_KEY=" << m_apiKey.toStdString() << "\n";
+
+     for (const auto& item : m_gamesModel) {
         QVariantMap m = item.toMap();
         file << m["id"].toString().toStdString() << "-" 
              << m["title"].toString().toStdString() << "\n";
     }
-    file << "PATH=" << m_path.toStdString() << "\n";
-    file << "API_KEY=" << m_apiKey.toStdString() << "\n";
     file.close();
 }
 
@@ -58,12 +59,12 @@ void SteamGrid::readCache() {
     m_gamesModel.clear();
     while (std::getline(file, line)) {
         if (line.empty()) continue;
-        QString ql = QString::fromStdString(line);
-        if (ql.startsWith("PATH=")) m_path = ql.mid(5);
-        else if (ql.startsWith("API_KEY=")) m_apiKey = ql.mid(8);
+        QString data = QString::fromStdString(line);
+        if (data.startsWith("PATH=")) m_path = data.mid(5);
+        else if (data.startsWith("API_KEY=")) m_apiKey = data.mid(8);
         else {
-            int d = ql.indexOf('-');
-            if (d != -1) m_gamesModel.append(QVariantMap{{"id", ql.left(d)}, {"title", ql.mid(d+1)}});
+            int d = data.indexOf('-');
+            if (d != -1) m_gamesModel.append(QVariantMap{{"id", data.left(d)}, {"title", data.mid(d+1)}});
         }
     }
     emit configChanged();
@@ -73,7 +74,7 @@ void SteamGrid::readCache() {
 void SteamGrid::createCache() {
     emit progressChanged(0.01);
     std::string ps = m_path.toStdString();
-    if (!fs::exists(ps)) { emit progressChanged(1.0); return; }
+    if (!fs::exists(ps)) { emit progressChanged(1.0); return;}
 
     QVariantList temp; std::set<std::string> ids; int total = 0;
     for (auto& e : fs::directory_iterator(ps)) if (e.is_regular_file()) total++;
@@ -93,7 +94,7 @@ void SteamGrid::createCache() {
         }
     }
     m_gamesModel = temp;
-    writeCacheToFile();
+    writeCache();
     emit gamesModelChanged(); emit cacheExistsChanged(); emit progressChanged(1.0);
 }
 
@@ -103,9 +104,10 @@ void SteamGrid::init() {
 
 void SteamGrid::saveConfiguration(QString apiKey, QString steamPath) {
     bool pathChanged = (m_path != steamPath);
-    m_apiKey = apiKey; m_path = steamPath;
+    m_apiKey = apiKey;
+    m_path = steamPath;
     emit configChanged();
-    writeCacheToFile();
+    writeCache();
     if (pathChanged || m_gamesModel.isEmpty()) {
         (void)QtConcurrent::run([this]() { this->createCache(); });
     } else {

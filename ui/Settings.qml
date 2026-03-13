@@ -112,10 +112,9 @@ Window {
                     steamGrid.saveConfiguration(apiKeyField.text, pathField.text)
                     var comp = Qt.createComponent("Progress.qml")
                     if (comp.status === Component.Ready) {
-                        // Upewnij się, że root jest dostępny w Main.qml
-                        comp.createObject(settingsRoot).show() 
+                    comp.createObject(root).show() 
                     }
-                    settingsRoot.close()
+                settingsRoot.close()
                 }
             }
         }
