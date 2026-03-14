@@ -4,16 +4,16 @@ import QtQuick.Controls
 Item {
     id: root
     width: {
-        if (type === "heroes") return 360;
-        if (type === "icons") return 160;
-        if (type === "logos") return 300;
+        if (type === "Heroes") return 360;
+        if (type === "Icons") return 160;
+        if (type === "Logos") return 300;
         return 200; // grid
     }
     height: mainColumn.height
 
     property alias imageSource: coverImage.source
     property alias btnText: download.btnText
-    property string type: "grid" // "grid", "heroes", "icons", "logos"
+    property string type: "Grids" // "grid", "heroes", "icons", "logos"
 
     Theme { id: theme }
 
@@ -39,10 +39,10 @@ Item {
                 width: parent.width
                 // POPRAWIONA LOGIKA WYSOKOŚCI:
                 height: {
-                    if (root.type === "grid") return width * 1.4;
-                    if (root.type === "heroes") return width * 0.5;
-                    if (root.type === "icons") return width;
-                    if (root.type === "logos") {
+                    if (root.type === "Grids") return width * 1.4;
+                    if (root.type === "Heroes") return width * 0.5;
+                    if (root.type === "Icons") return width;
+                    if (root.type === "Logos") {
                         return coverImage.status === Image.Ready 
                             ? Math.min(width * (coverImage.implicitHeight / coverImage.implicitWidth), 150)
                             : 100;
@@ -53,17 +53,17 @@ Item {
                 
                 Rectangle {
                     anchors.fill: parent
-                    anchors.margins: root.type === "logos" ? 5 : 12 // Mniejszy margines dla logos
-                    color: root.type === "icons" ? "#000000" : "transparent" // Logos nie potrzebują czarnego tła
+                    anchors.margins: root.type === "Logos" ? 5 : 12 
+                    color: root.type === "Icons" ? "#000000" : "transparent"
                     radius: 4
-                    border.color: root.type === "logos" ? "transparent" : theme.frame
+                    border.color: root.type === "Logos" ? "transparent" : theme.frame
                     border.width: 2
                     clip: true
 
                     AnimatedImage {
                         id: coverImage
                         anchors.fill: parent
-                        fillMode: (root.type === "logos" || root.type === "icons") 
+                        fillMode: (root.type === "Logos" || root.type === "Icons") 
                                   ? Image.PreserveAspectFit 
                                   : Image.PreserveAspectCrop
                         asynchronous: true

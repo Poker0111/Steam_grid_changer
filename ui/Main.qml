@@ -81,14 +81,17 @@ ApplicationWindow {
                 spacing: 15
 
                 CsButton {
-                    btnText: "Settings"
-                    Layout.preferredWidth: 70
+                    //btnText: "Settings"
+                    iconSource:"qrc:/SteamApp/resources/set.svg"
+                    Layout.preferredWidth: 35
+                    Layout.preferredHeight: 35
                     onClicked: settingsDialog.show()
                 }
 
                 CsButton { 
                     btnText: "Reload Library"
                     Layout.preferredWidth: 110
+                    Layout.preferredHeight:35
                     onClicked: {
                         var comp = Qt.createComponent("Progress.qml")
                         if (comp.status === Component.Ready) comp.createObject(root).show()
@@ -104,7 +107,10 @@ ApplicationWindow {
                     color: "white"
                     font.pixelSize: 14
                     placeholderTextColor: theme.font
+
                     leftPadding: 15
+                    rightPadding: 45
+
                     verticalAlignment: TextInput.AlignVCenter
 
                     background: Rectangle {
@@ -113,6 +119,47 @@ ApplicationWindow {
                         border.width: 1.5
                         border.color: field.activeFocus ? theme.border_cilick : (field.hovered ? theme.border_hoverd : theme.border)
                     }
+
+                    Rectangle {
+                            id: searchIconContainer
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            //anchors.margins: 4
+
+                            height: parent.height
+                            width: height
+
+                            color:theme.border_cilick
+                            radius: 3
+
+                            Image {
+                               source: "qrc:/SteamApp/resources/loop.svg" // Podaj swoją ścieżkę do lupki
+                                anchors.centerIn: parent
+                                width: parent.width-16
+                                height: parent.height-16
+                                fillMode: Image.PreserveAspectFit
+
+                                scale: iconMouseArea.containsMouse ? 1.25 : 1.0
+
+                            Behavior on scale {
+                                NumberAnimation {
+                                duration: 150
+                                easing.type: Easing.OutBack
+                                    }
+                                }
+                            }
+
+                            MouseArea {
+                                id: iconMouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+        
+                                onClicked: {
+                                    //wait
+                                }
+                            }
+                        }
 
                     onTextEdited: {
                         suggestionsModel.clear()
@@ -270,7 +317,7 @@ ApplicationWindow {
                 }*/
                 CsComponent{
                     id:combo4
-                    type:"grid"
+                    type:type.currentText
                     imageSource:"https://cdn2.steamgriddb.com/grid/51f993d243a0d38e4669ac0bc3f8df05.webp"
                 }
             }

@@ -73,16 +73,16 @@ void SteamGrid::readCache() {
 
 void SteamGrid::createCache() {
     emit progressChanged(0.01);
-    std::string ps = m_path.toStdString();
+    std::string ps = m_path.toStdString()+"\\librarycache";
     if (!fs::exists(ps)) { emit progressChanged(1.0); return;}
 
     QVariantList temp; std::set<std::string> ids; int total = 0;
     for (auto& e : fs::directory_iterator(ps)) if (e.is_regular_file()) total++;
     if (total == 0) { emit progressChanged(1.0); return; }
 
-    int curr = 0;
+    int current = 0;
     for (auto& entry : fs::directory_iterator(ps)) {
-        curr++; emit progressChanged(static_cast<double>(curr) / total);
+        current++; emit progressChanged(static_cast<double>(current) / total);
         if (entry.is_regular_file()) {
             std::string fn = entry.path().filename().string(), id = "";
             for (char c : fn) { if (isdigit(c)) id += c; else break; }

@@ -35,7 +35,7 @@ Window {
     font.family: styleFonts.regular
     font.pixelSize: 13 
     font.weight: Font.Medium
-    color: themes.font // Nieco jaśniejszy szary niż #afafaf
+    color: "white" // Nieco jaśniejszy szary niż #afafaf
     
     
     }
@@ -58,6 +58,13 @@ Window {
                 }
                 
             }
+            Label{
+                text:"Go to www.steamgriddb.com login, go to Preferences and API to get a key"
+                font.family: styleFonts.regular
+                font.pixelSize: 13
+                font.weight: Font.Medium
+                color:theme.font
+            }
         }
 
         Column {
@@ -68,7 +75,7 @@ Window {
     font.family: styleFonts.regular
     font.pixelSize: 13
     font.weight: Font.Medium
-    color: themes.font 
+    color: "white"
     
     
 }
@@ -90,6 +97,13 @@ Window {
                     border.width: 1
                 }
                 
+            }
+            Label{
+                text:"Example: your_Steam_directory\\userdata\\USER_ID\\config"
+                font.family: styleFonts.regular
+                font.pixelSize: 13
+                font.weight: Font.Medium
+                color:theme.font
             }
         }
 
