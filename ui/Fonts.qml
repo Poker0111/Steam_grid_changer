@@ -1,16 +1,9 @@
 import QtQuick
 
 QtObject {
-    id: fonts // Zmieniłem id na małe 'f', żeby nie myliło się z typem
+    property FontLoader _regular: FontLoader { source: "qrc:/SteamApp/fonts/Inter.ttf" }
+    property FontLoader _bold:    FontLoader { source: "qrc:/SteamApp/fonts/Inter-Bold.ttf" }
 
-    property FontLoader mainFontLoader: FontLoader {
-        source: "qrc:/SteamApp/fonts/Inter.ttf"
-    }
-    property FontLoader boldFontLoader: FontLoader {
-        source: "qrc:/SteamApp/fonts/Inter-Bold.ttf"
-    }
-
-    // POPRAWKA: Nazwy muszą się zgadzać z tymi powyżej!
-    readonly property string regular: mainFontLoader.status === mainFontLoader.name
-    readonly property string bold: boldFontLoader.status === boldFontLoader.name
+    readonly property string regular: _regular.status === FontLoader.Ready ? _regular.name : "Segoe UI"
+    readonly property string bold:    _bold.status    === FontLoader.Ready ? _bold.name    : "Segoe UI"
 }

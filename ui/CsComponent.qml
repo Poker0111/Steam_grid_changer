@@ -3,17 +3,12 @@ import QtQuick.Controls
 
 Item {
     id: root
-    width: {
-        if (type === "Heroes") return 360;
-        if (type === "Icons") return 160;
-        if (type === "Logos") return 300;
-        return 200; // grid
-    }
-    height: mainColumn.height
 
-    property alias imageSource: coverImage.source
-    property alias btnText: download.btnText
-    property string type: "Grids" // "grid", "heroes", "icons", "logos"
+    property url   imageSource: ""
+    property string btnText:    qsTr("DOWNLOAD")
+    property string type:       "Grids"
+
+    signal downloadClicked()
 
     Theme { id: theme }
 
@@ -36,55 +31,65 @@ Item {
             spacing: 0
 
             Rectangle {
+                id: imageArea
                 width: parent.width
-                // POPRAWIONA LOGIKA WYSOKOŚCI:
                 height: {
-                    if (root.type === "Grids") return width * 1.4;
-                    if (root.type === "Heroes") return width * 0.5;
-                    if (root.type === "Icons") return width;
+                    if (root.type === "Grids")  return width * 1.4
+                    if (root.type === "Heroes") return width * 0.5
+                    if (root.type === "Icons")  return width
                     if (root.type === "Logos") {
-                        return coverImage.status === Image.Ready 
+                        return coverImage.status === Image.Ready
                             ? Math.min(width * (coverImage.implicitHeight / coverImage.implicitWidth), 150)
-                            : 100;
+                            : 100
                     }
-                    return width;
+                    return width
                 }
                 color: "transparent"
-                
+
                 Rectangle {
                     anchors.fill: parent
-                    anchors.margins: root.type === "Logos" ? 5 : 12 
+                    anchors.margins: root.type === "Logos" ? 5 : 12
                     color: root.type === "Icons" ? "#000000" : "transparent"
                     radius: 4
                     border.color: root.type === "Logos" ? "transparent" : theme.frame
                     border.width: 2
                     clip: true
 
+                    BusyIndicator {
+                        anchors.centerIn: parent
+                        running: coverImage.status === Image.Loading
+                        visible: running
+                        scale: 0.6
+                    }
+
                     AnimatedImage {
                         id: coverImage
                         anchors.fill: parent
-                        fillMode: (root.type === "Logos" || root.type === "Icons") 
-                                  ? Image.PreserveAspectFit 
+                        source: root.imageSource
+                        fillMode: (root.type === "Logos" || root.type === "Icons")
+                                  ? Image.PreserveAspectFit
                                   : Image.PreserveAspectCrop
                         asynchronous: true
-                        
+                        cache: true
                         playing: hoverHandler.hovered
-                        currentFrame: playing ? currentFrame : 0 
+                        paused:  !hoverHandler.hovered
                     }
                 }
             }
 
+
             Rectangle {
                 width: parent.width
-                height: 60
+                height: 52
                 color: "transparent"
 
                 CsButton {
-                    id: download
-                    width: parent.width - 24
-                    height: 36
+                    id: downloadBtn
+                    width: parent.width - 20
+                    height: 34
                     anchors.centerIn: parent
-                    btnText: "DOWNLOAD"
+                    btnText: root.btnText
+                    onClicked: root.downloadClicked()
                 }
             }
         }

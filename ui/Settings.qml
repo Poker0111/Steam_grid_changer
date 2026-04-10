@@ -2,17 +2,18 @@ import QtQuick
 import QtQuick.Controls
 
 Window {
-    id: settingsRoot
+    id: root
     required property var themes
+
     width: 600
-    height: 350
+    height: 400
     minimumWidth: 400
-    minimumHeight: 300
-    title: "Ustawienia"
+    minimumHeight: 350
+    title: qsTr("Settings")
     color: themes.back_second
     modality: Qt.ApplicationModal
 
-    Fonts { id: styleFonts }
+    Fonts { id: fonts }
 
     Column {
         anchors.centerIn: parent
@@ -20,90 +21,151 @@ Window {
         width: parent.width * 0.8
 
         Label {
-    text: "Konfiguracja SteamGrid"
-    font.family: styleFonts.bold
-    font.pixelSize: 24 
-    color: themes.font_click
-    
-    }
+            text: qsTr("Settings")
+            font.family: fonts.bold
+            font.pixelSize: 24
+            color: themes.font_click
+        }
 
         Column {
             width: parent.width
             spacing: 5
+
             Label {
-    text: "API Key:"
-    font.family: styleFonts.regular
-    font.pixelSize: 13 
-    font.weight: Font.Medium
-    color: "white" // Nieco jaśniejszy szary niż #afafaf
-    
-    
-    }
+                text: qsTr("API Key")
+                font.family: fonts.regular
+                font.pixelSize: 13
+                font.weight: Font.Medium
+                color: "white"
+            }
+
             TextField {
                 id: apiKeyField
                 width: parent.width
+                height: 35
                 text: steamGrid.apiKey
                 selectByMouse: true
-                height:35
-
                 font.pixelSize: 14
                 leftPadding: 10
-                color: apiKeyField.activeFocus ? themes.font_click : themes.font
-
-                background:Rectangle{
+                color: activeFocus ? themes.font_click : themes.font
+                background: Rectangle {
                     color: themes.textfield_c
-                    radius:3
-                    border.color: apiKeyField.activeFocus ? themes.font_hover : themes.border
+                    radius: 3
                     border.width: 1
+                    border.color: apiKeyField.activeFocus ? themes.font_hover : themes.border
                 }
-                
             }
-            Label{
-                text:"Go to www.steamgriddb.com login, go to Preferences and API to get a key"
-                font.family: styleFonts.regular
-                font.pixelSize: 13
-                font.weight: Font.Medium
-                color:theme.font
+
+            Label {
+                text: qsTr("Get API key from steamgriddb.com → Preferences → API")
+                font.family: fonts.regular
+                font.pixelSize: 12
+                color: themes.font
             }
         }
 
         Column {
             width: parent.width
             spacing: 5
+
             Label {
-    text: "Ścieżka:"
-    font.family: styleFonts.regular
-    font.pixelSize: 13
-    font.weight: Font.Medium
-    color: "white"
-    
-    
-}
+                text: qsTr("Steam Path")
+                font.family: fonts.regular
+                font.pixelSize: 13
+                font.weight: Font.Medium
+                color: "white"
+            }
+
             TextField {
                 id: pathField
                 width: parent.width
+                height: 35
                 text: steamGrid.path
                 selectByMouse: true
-                height:35
-
                 font.pixelSize: 14
                 leftPadding: 10
-                color: pathField.activeFocus ? themes.font_click : themes.font
-
-                background:Rectangle{
+                color: activeFocus ? themes.font_click : themes.font
+                background: Rectangle {
                     color: themes.textfield_c
-                    radius:3
-                    border.color: pathField.activeFocus ? themes.font_hover : themes.border
+                    radius: 3
                     border.width: 1
+                    border.color: pathField.activeFocus ? themes.font_hover : themes.border
                 }
-                
             }
-            Label{
-                text:"Example: your_Steam_directory\\userdata\\USER_ID\\config"
-                font.family: styleFonts.regular
+
+            Label {
+                text: qsTr("Example: C:\\Steam\\userdata\\USER_ID\\config")
+                font.family: fonts.regular
+                font.pixelSize: 12
+                color: themes.font
+            }
+        }
+
+        Row {
+            width: parent.width
+            spacing: 10
+
+            Label {
+                text: qsTr("Language")
+                font.family: fonts.regular
                 font.pixelSize: 13
                 font.weight: Font.Medium
-                color:theme.font
+                color: "white"
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            ComboBox {
+                id: langCombo
+                width: 160
+                height: 35
+                model: [
+                    { text: "Polski",  code: "pl" },
+                    { text: "English", code: "en" },
+                    { text: "日本語",  code: "ja" }
+                ]
+                textRole: "text"
+
+                Component.onCompleted: {
+                    for (var i = 0; i < model.length; i++) {
+                        if (model[i].code === steamGrid.currentLanguage) {
+                            currentIndex = i
+                            break
+                        }
+                    }
+                }
+
+                background: Rectangle {
+                    color: langCombo.down ? themes.button_click2
+                         : langCombo.hovered ? themes.button_hover2
+                         : themes.button2
+                    radius: 2
+                    border.width: 1
+                    border.color: themes.frame
+                }
+
+                contentItem: Text {
+                    leftPadding: 12
+                    text: langCombo.displayText
+                    font.pixelSize: 13
+                    color: themes.font_hover
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                delegate: ItemDelegate {
+                    width: langCombo.width
+                    background: Rectangle {
+                        color: hovered ? themes.button_hover2 : themes.button2
+                        border.color: themes.border
+                        border.width: 1
+                    }
+                    contentItem: Text {
+                        text: modelData.text
+                        color: hovered ? "white" : themes.font
+                        font.pixelSize: 13
+                        verticalAlignment: Text.AlignVCenter
+                        leftPadding: 10
+                    }
+                }
             }
         }
 
@@ -112,23 +174,21 @@ Window {
             spacing: 10
 
             CsButton {
-                btnText: "Anuluj"
+                btnText: qsTr("Cancel")
                 width: (parent.width - 10) / 2
                 height: 48
-                onClicked: settingsRoot.close()
+                onClicked: root.close()
             }
 
             CsButton {
-                btnText: "Zapisz"
+                btnText: qsTr("Save")
                 width: (parent.width - 10) / 2
                 height: 48
                 onClicked: {
+                    var selectedCode = langCombo.model[langCombo.currentIndex].code
+                    steamGrid.setLanguage(selectedCode)
                     steamGrid.saveConfiguration(apiKeyField.text, pathField.text)
-                    var comp = Qt.createComponent("Progress.qml")
-                    if (comp.status === Component.Ready) {
-                    comp.createObject(root).show() 
-                    }
-                settingsRoot.close()
+                    root.close()
                 }
             }
         }

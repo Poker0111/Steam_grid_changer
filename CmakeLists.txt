@@ -9,7 +9,7 @@ project(SteamUI VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Gui Qml Quick QuickControls2 Concurrent Core)
+find_package(Qt6 REQUIRED COMPONENTS Gui Qml Quick QuickControls2 Concurrent Core LinguistTools)
 qt_standard_project_setup()
 
 include(FetchContent)
@@ -54,6 +54,8 @@ qt_add_qml_module(appSteamUI
         ui/Progress.qml
         ui/Fonts.qml
         ui/CsComponent.qml
+        ui/ResultsGrid.qml
+        ui/SearchBar.qml
     RESOURCES
         resources/placeholder.ico
         resources/set.svg
@@ -61,6 +63,9 @@ qt_add_qml_module(appSteamUI
         resources/messages.json
         fonts/Inter.ttf
         fonts/Inter-Bold.ttf
+        translations/app_pl.qm
+        translations/app_en.qm
+        translations/app_ja.ts
 )
 
 
@@ -74,4 +79,23 @@ target_link_libraries(appSteamUI PRIVATE
     Qt6::Core
     cpr::cpr
     nlohmann_json::nlohmann_json
+)
+
+set(TS_FILES
+    translations/app_pl.ts
+    translations/app_en.ts
+    translations/app_ja.ts
+)
+
+qt_add_translations(
+    TARGETS appSteamUI    
+    TS_FILES ${TS_FILES}
+    SOURCES
+        ui/Main.qml
+        ui/SearchBar.qml
+        ui/ResultsGrid.qml
+        ui/Settings.qml
+        ui/Progress.qml
+        ui/CsComponent.qml
+        ui/CsButton.qml
 )
