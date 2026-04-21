@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
 
 Window {
     id: root
@@ -14,6 +16,18 @@ Window {
     modality: Qt.ApplicationModal
 
     Fonts { id: fonts }
+
+    FolderDialog{
+        id:dialog
+        title: qsTr("Chose Steam path")
+        currentFolder:"file:///" + pathField.text
+        onAccepted:{
+            var path = selectedFolder.toString()
+            path = path.replace("file:///", "")
+            path = path.replace(/\//g, "\\")
+            pathField.text = path
+        }
+    }
 
     Column {
         anchors.centerIn: parent
@@ -76,9 +90,13 @@ Window {
                 color: "white"
             }
 
+        RowLayout{
+            width: parent.width
+            spacing: 10
+
             TextField {
                 id: pathField
-                width: parent.width
+                Layout.fillWidth: true
                 height: 35
                 text: steamGrid.path
                 selectByMouse: true
@@ -92,6 +110,13 @@ Window {
                     border.color: pathField.activeFocus ? themes.font_hover : themes.border
                 }
             }
+
+            CsButton{
+                Layout.preferredWidth: 35
+                Layout.preferredHeight: 35
+                onClicked: dialog.open()
+            }
+        }
 
             Label {
                 text: qsTr("Example: C:\\Steam\\userdata\\USER_ID\\config")

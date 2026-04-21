@@ -9,7 +9,7 @@ project(SteamUI VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Gui Qml Quick QuickControls2 Concurrent Core LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Gui Qml Quick QuickControls2 Concurrent Core LinguistTools Widgets)
 qt_standard_project_setup()
 
 include(FetchContent)
@@ -76,6 +76,7 @@ target_link_libraries(appSteamUI PRIVATE
     Qt6::QuickControls2
     Qt6::Concurrent 
     Qt6::Core
+    Qt6::Widgets
     cpr::cpr
     nlohmann_json::nlohmann_json
 )

@@ -49,6 +49,7 @@ ApplicationWindow {
             id: searchBar
             Layout.fillWidth: true
             Layout.preferredHeight: 70
+            gamesModel: allGamesModel
 
             onSettingsRequested: settingsDialog.show()
             onReloadRequested:   { showProgress(); steamGrid.reload() }

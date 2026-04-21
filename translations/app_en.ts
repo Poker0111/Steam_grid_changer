@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>CsComponent</name>
+    <message>
+        <location filename="../ui/CsComponent.qml" line="8"/>
+        <source>DOWNLOAD</source>
+        <translation type="unfinished">DOWNLOAD</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <location filename="../ui/Main.qml" line="12"/>
@@ -30,12 +38,12 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../ui/SearchBar.qml" line="56"/>
+        <location filename="../ui/SearchBar.qml" line="53"/>
         <source>Reload Library</source>
         <translation type="unfinished">Update library</translation>
     </message>
     <message>
-        <location filename="../ui/SearchBar.qml" line="66"/>
+        <location filename="../ui/SearchBar.qml" line="63"/>
         <source>Search</source>
         <translation type="unfinished">Search</translation>
     </message>
@@ -43,43 +51,48 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../ui/Settings.qml" line="12"/>
-        <location filename="../ui/Settings.qml" line="24"/>
+        <location filename="../ui/Settings.qml" line="14"/>
+        <location filename="../ui/Settings.qml" line="38"/>
         <source>Settings</source>
         <translation type="unfinished">Settings</translation>
     </message>
     <message>
-        <location filename="../ui/Settings.qml" line="35"/>
+        <location filename="../ui/Settings.qml" line="22"/>
+        <source>Chose Steam path</source>
+        <translation type="unfinished">Chose Steam path</translation>
+    </message>
+    <message>
+        <location filename="../ui/Settings.qml" line="49"/>
         <source>API Key</source>
         <translation type="unfinished">API Key</translation>
     </message>
     <message>
-        <location filename="../ui/Settings.qml" line="60"/>
+        <location filename="../ui/Settings.qml" line="74"/>
         <source>Get API key from steamgriddb.com → Preferences → API</source>
         <translation type="unfinished">Get API key from steamgriddb.com → Preferences → API</translation>
     </message>
     <message>
-        <location filename="../ui/Settings.qml" line="72"/>
+        <location filename="../ui/Settings.qml" line="86"/>
         <source>Steam Path</source>
         <translation type="unfinished">Steam Path</translation>
     </message>
     <message>
-        <location filename="../ui/Settings.qml" line="97"/>
+        <location filename="../ui/Settings.qml" line="122"/>
         <source>Example: C:SteamserdataSER_IDconfig</source>
-        <translation type="unfinished">ex: C:\\Steam\\userdata\\USER_ID\\config</translation>
+        <translation type="unfinished">ex: Example: C:\\Steam\\userdata\\USER_ID\\config</translation>
     </message>
     <message>
-        <location filename="../ui/Settings.qml" line="109"/>
+        <location filename="../ui/Settings.qml" line="134"/>
         <source>Language</source>
         <translation type="unfinished">Language</translation>
     </message>
     <message>
-        <location filename="../ui/Settings.qml" line="177"/>
+        <location filename="../ui/Settings.qml" line="202"/>
         <source>Cancel</source>
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
-        <location filename="../ui/Settings.qml" line="184"/>
+        <location filename="../ui/Settings.qml" line="209"/>
         <source>Save</source>
         <translation type="unfinished">Save</translation>
     </message>
