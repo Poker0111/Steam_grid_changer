@@ -11,12 +11,16 @@ Rectangle {
     signal reloadRequested()
 
     property alias currentType: typeCombo.currentText
+    property var gamesModel: null
+
+    property string _lastId:    ""
+    property string _lastTitle: ""
 
     function refreshSuggestions(text) {
         suggestionsModel.clear()
-        if (text.length === 0) { suggestionsPopup.close(); return }
-        for (var i = 0; i < allGamesModel.count; i++) {
-            var g = allGamesModel.get(i)
+        if (text.length === 0 || !gamesModel) { suggestionsPopup.close(); return }
+        for (var i = 0; i < gamesModel.count; i++) {
+            var g = gamesModel.get(i)
             if (g.title.toLowerCase().indexOf(text.toLowerCase()) !== -1)
                 suggestionsModel.append({ id: g.id, title: g.title })
         }
@@ -25,13 +29,12 @@ Rectangle {
 
     function triggerSearch(gameId, gameTitle) {
         suggestionsPopup.close()
+        _lastId    = gameId
+        _lastTitle = gameTitle
         root.searchRequested(gameId, gameTitle, typeCombo.currentText)
     }
 
     ListModel { id: suggestionsModel }
-
-    property string _lastId: ""
-    property string _lastTitle: ""
 
     RowLayout {
         anchors.fill: parent
@@ -48,7 +51,7 @@ Rectangle {
 
         CsButton {
             btnText: qsTr("Reload Library")
-            Layout.preferredWidth: 110
+            Layout.preferredWidth: 130
             Layout.preferredHeight: 35
             onClicked: root.reloadRequested()
         }
@@ -66,23 +69,27 @@ Rectangle {
             verticalAlignment: TextInput.AlignVCenter
 
             background: Rectangle {
-                color: searchField.activeFocus ? theme.button_click : (searchField.hovered ? theme.button_hover : theme.button)
+                color: searchField.activeFocus ? theme.button_click
+                     : searchField.hovered     ? theme.button_hover
+                     : theme.button
                 radius: 4
                 border.width: 1.5
-                border.color: searchField.activeFocus ? theme.border_cilick : (searchField.hovered ? theme.border_hoverd : theme.border)
+                border.color: searchField.activeFocus ? theme.border_cilick
+                            : searchField.hovered     ? theme.border_hoverd
+                            : theme.border
             }
 
             onTextEdited: root.refreshSuggestions(text)
 
             Keys.onReturnPressed: {
+                if (suggestionsModel.count === 0) return
                 for (var i = 0; i < suggestionsModel.count; i++) {
                     if (suggestionsModel.get(i).title.toLowerCase() === text.toLowerCase()) {
                         root.triggerSearch(suggestionsModel.get(i).id, suggestionsModel.get(i).title)
                         return
                     }
                 }
-                if (suggestionsModel.count > 0)
-                    root.triggerSearch(suggestionsModel.get(0).id, suggestionsModel.get(0).title)
+                root.triggerSearch(suggestionsModel.get(0).id, suggestionsModel.get(0).title)
             }
 
             Rectangle {
@@ -109,14 +116,14 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
+                        if (suggestionsModel.count === 0) return
                         for (var i = 0; i < suggestionsModel.count; i++) {
                             if (suggestionsModel.get(i).title === searchField.text) {
                                 root.triggerSearch(suggestionsModel.get(i).id, suggestionsModel.get(i).title)
                                 return
                             }
                         }
-                        if (suggestionsModel.count > 0)
-                            root.triggerSearch(suggestionsModel.get(0).id, suggestionsModel.get(0).title)
+                        root.triggerSearch(suggestionsModel.get(0).id, suggestionsModel.get(0).title)
                     }
                 }
             }
@@ -176,7 +183,9 @@ Rectangle {
                             implicitWidth: 6
                             radius: 3
                             color: theme.font
-                            opacity: scrollBar.active ? (scrollBar.hovered || scrollBar.pressed ? 0.6 : 0.3) : 0.0
+                            opacity: scrollBar.active
+                                     ? (scrollBar.hovered || scrollBar.pressed ? 0.6 : 0.3)
+                                     : 0.0
                             Behavior on opacity { NumberAnimation { duration: 200 } }
                         }
                     }
@@ -197,7 +206,9 @@ Rectangle {
             }
 
             background: Rectangle {
-                color: typeCombo.down ? theme.button_click2 : (typeCombo.hovered ? theme.button_hover2 : theme.button2)
+                color: typeCombo.down    ? theme.button_click2
+                     : typeCombo.hovered ? theme.button_hover2
+                     : theme.button2
                 radius: 2
                 border.width: 1
                 border.color: theme.frame
@@ -209,7 +220,9 @@ Rectangle {
                 text: typeCombo.displayText
                 font.pixelSize: 13
                 font.bold: true
-                color: typeCombo.down ? theme.font_click : (typeCombo.hovered ? theme.font_hover : theme.font)
+                color: typeCombo.down    ? theme.font_click
+                     : typeCombo.hovered ? theme.font_hover
+                     : theme.font
                 verticalAlignment: Text.AlignVCenter
             }
 

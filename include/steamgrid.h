@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVariantList>
 #include <QSettings>
+#include <QMap>
 #include <QtConcurrent>
 #include <QString>
 #include <filesystem>
@@ -15,7 +16,7 @@ class SteamGrid : public QObject {
     Q_PROPERTY(QString apiKey READ apiKey NOTIFY configChanged)
     Q_PROPERTY(QString path READ path NOTIFY configChanged)
     Q_PROPERTY(QVariantList imagesModel READ imagesModel NOTIFY imagesModelChanged)
-    Q_PROPERTY(bool isLoadingImages READ isLoadingImages  NOTIFY isLoadingImagesChanged)
+    Q_PROPERTY(bool isLoadingImages READ isLoadingImages NOTIFY isLoadingImagesChanged)
     Q_PROPERTY(bool hasMoreImages READ hasMoreImages NOTIFY hasMoreImagesChanged)
     Q_PROPERTY(QString downloadStatus READ downloadStatus NOTIFY downloadStatusChanged)
     Q_PROPERTY(QString currentLanguage READ currentLanguage NOTIFY languageChanged)
@@ -34,11 +35,11 @@ public:
 
     void setCurrentLanguage(const QString& lang) { m_currentLanguage = lang; }
 
-    QVariantList gamesModel() const{return m_gamesModel;}
-    QVariantList imagesModel() const{ return m_imagesModel;}
+    QVariantList gamesModel() const { return m_gamesModel; }
+    QVariantList imagesModel() const { return m_imagesModel; }
     bool isLoadingImages() const { return m_isLoadingImages; }
     bool hasMoreImages() const { return m_hasMoreImages; }
-    bool cacheExists() const{return std::filesystem::exists(m_cacheFile.toStdString()); }
+    bool cacheExists() const { return std::filesystem::exists(m_cacheFile.toStdString()); }
     QString apiKey() const { return m_apiKey; }
     QString path() const { return m_path; }
     QString downloadStatus() const { return m_downloadStatus; }
@@ -53,7 +54,7 @@ signals:
     void isLoadingImagesChanged();
     void hasMoreImagesChanged();
     void downloadStatusChanged();
-    void languageChanged();
+    void languageChanged(const QString& langCode);
 
 private:
     void    writeCache();
@@ -67,12 +68,13 @@ private:
     QVariantList m_imagesModel;
     bool m_isLoadingImages=false;
     bool m_hasMoreImages=false;
-    int  m_currentPage=1;
+    int m_currentPage=1;
     QString m_downloadStatus;
-    QString m_currentLanguage = "en";
-    QString m_cacheFile= "steamgrid.cache";
+    QString m_currentLanguage="en";
+    QString m_cacheFile="steamgrid.cache";
     QString m_apiKey;
     QString m_path;
+    QMap<QString, int> m_sgdbIdCache;
 };
 
 #endif

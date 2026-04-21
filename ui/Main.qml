@@ -56,7 +56,7 @@ ApplicationWindow {
             onSearchRequested: function(gameId, gameTitle, imageType) {
                 searchBar._lastId    = gameId
                 searchBar._lastTitle = gameTitle
-                resultsGrid.steamAppId  = gameId      // ← przekaż do grida
+                resultsGrid.steamAppId  = gameId
                 resultsGrid.imageType   = imageType
                 steamGrid.searchImages(gameId, imageType)
             }
@@ -67,7 +67,7 @@ ApplicationWindow {
             Layout.fillWidth: true
             Layout.fillHeight: true
             imageType:  searchBar.currentType
-            steamAppId: ""   // wypełniane przez onSearchRequested
+            steamAppId: ""
         }
     }
 }

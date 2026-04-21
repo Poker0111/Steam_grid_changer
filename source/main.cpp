@@ -3,8 +3,8 @@
 #include <QQmlContext>
 #include <QTranslator>
 #include <QSettings>
-#include <QQuickWindow>
 #include <QtQuickControls2/QQuickStyle>
+#include <QDebug>
 #include "steamgrid.h"
 
 int main(int argc, char *argv[]) {
@@ -12,12 +12,10 @@ int main(int argc, char *argv[]) {
 
     QGuiApplication app(argc, argv);
     QQuickStyle::setStyle("Basic");
-    app.setWindowIcon(QIcon(":/SteamApp/resources/placeholder.ico"));
 
     QSettings settings("SteamGridChanger", "SteamGridChanger");
     QString lang = settings.value("language", "en").toString();
-    QTranslator* translator = new QTranslator(&app);
-    if (translator->load(":/translations/app_" + lang + ".qm"))
+    static QTranslator* translator = new QTranslator(&app);
         app.installTranslator(translator);
 
     SteamGrid sg;
@@ -31,23 +29,23 @@ int main(int argc, char *argv[]) {
 
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
         &app, [url](QObject* obj, const QUrl& objUrl) {
-            if (!obj && url == objUrl) QCoreApplication::exit(-1);
+            if (!obj && url == objUrl) {
+                qCritical() << "BLAD: Nie mozna zaladować pliku Main.qml!";
+                QCoreApplication::exit(-1);
+            }
         }, Qt::QueuedConnection);
 
     engine.load(url);
 
-    QObject::connect(&sg, &SteamGrid::languageChanged, [&, translator]() mutable {
-        QString newLang = settings.value("language", "en").toString();
-
+    QObject::connect(&sg, &SteamGrid::languageChanged, [&](const QString& newLang) {
         app.removeTranslator(translator);
-        delete translator;
 
-        translator = new QTranslator(&app);
-        if (translator->load(":/translations/app_" + newLang + ".qm"))
+        if (translator->load(":/i18n/app_" + newLang + ".qm")) {
             app.installTranslator(translator);
+        } 
+        settings.setValue("language", newLang);
 
-        engine.clearComponentCache();
-        engine.load(url);
+        engine.retranslate(); 
     });
 
     return app.exec();

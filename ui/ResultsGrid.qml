@@ -113,7 +113,7 @@ Item {
             text: qsTr("No Results")
             color: theme.font
             font.pixelSize: 13
-            visible: !steamGrid.hasMoreImages && !steamGrid.isLoadingImages
+            visible: steamGrid.imagesModel.length === 0 && !steamGrid.isLoadingImages
         }
 
         CsButton {

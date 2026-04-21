@@ -60,12 +60,11 @@ qt_add_qml_module(appSteamUI
         resources/placeholder.ico
         resources/set.svg
         resources/loop.svg
-        resources/messages.json
+        resources/messages_pl.json
+        resources/messages_ja.json
+        resources/messages_en.json
         fonts/Inter.ttf
         fonts/Inter-Bold.ttf
-        translations/app_pl.qm
-        translations/app_en.qm
-        translations/app_ja.ts
 )
 
 
@@ -87,8 +86,7 @@ set(TS_FILES
     translations/app_ja.ts
 )
 
-qt_add_translations(
-    TARGETS appSteamUI    
+qt_add_translations(appSteamUI    
     TS_FILES ${TS_FILES}
     SOURCES
         ui/Main.qml
