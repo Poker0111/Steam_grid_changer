@@ -48,7 +48,10 @@ Window {
         currentMessage = messages[idx]
     }
 
-    Component.onCompleted: loadMessages()
+    Component.onCompleted: {
+        bar.value = 0
+        loadMessages()
+    }
 
     Timer {
         interval: 3000

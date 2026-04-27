@@ -9,7 +9,7 @@ ApplicationWindow {
     minimumWidth: 650
     minimumHeight: 400
     visible: true
-    title: qsTr("SteamUI")
+    title: qsTr("Steam Covelay")
 
     Theme { id: theme }
     Fonts { id: fonts  }
@@ -25,13 +25,17 @@ ApplicationWindow {
     }
 
     function showProgress() {
-        var comp = Qt.createComponent("Progress.qml")
-        if (comp.status === Component.Ready) comp.createObject(root).show()
+        var comp = Qt.createComponent("qrc:/SteamApp/ui/Progress.qml")
+        if (comp.status === Component.Ready)
+            comp.createObject(null).show()
+        else
+            console.warn("Progress.qml:", comp.errorString())
     }
 
     Connections {
         target: steamGrid
         function onGamesModelChanged() { updateModel() }
+        function onCacheStarted()      { showProgress() }
     }
 
     Component.onCompleted: {
@@ -52,13 +56,13 @@ ApplicationWindow {
             gamesModel: allGamesModel
 
             onSettingsRequested: settingsDialog.show()
-            onReloadRequested:   { showProgress(); steamGrid.reload() }
+            onReloadRequested: { showProgress(); steamGrid.reload() }
 
             onSearchRequested: function(gameId, gameTitle, imageType) {
                 searchBar._lastId    = gameId
                 searchBar._lastTitle = gameTitle
-                resultsGrid.steamAppId  = gameId
-                resultsGrid.imageType   = imageType
+                resultsGrid.steamAppId = gameId
+                resultsGrid.imageType  = imageType
                 steamGrid.searchImages(gameId, imageType)
             }
         }

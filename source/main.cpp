@@ -15,7 +15,8 @@ int main(int argc, char *argv[]) {
 
     QSettings settings("SteamGridChanger", "SteamGridChanger");
     QString lang = settings.value("language", "en").toString();
-    static QTranslator* translator = new QTranslator(&app);
+    QTranslator* translator = new QTranslator(&app);
+    if (translator->load(":/i18n/app_" + lang + ".qm"))
         app.installTranslator(translator);
 
     SteamGrid sg;
@@ -30,22 +31,21 @@ int main(int argc, char *argv[]) {
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
         &app, [url](QObject* obj, const QUrl& objUrl) {
             if (!obj && url == objUrl) {
-                qCritical() << "BLAD: Nie mozna zaladować pliku Main.qml!";
+                qCritical() << "Nie można załadować Main.qml";
                 QCoreApplication::exit(-1);
             }
         }, Qt::QueuedConnection);
 
     engine.load(url);
 
-    QObject::connect(&sg, &SteamGrid::languageChanged, [&](const QString& newLang) {
+    QObject::connect(&sg, &SteamGrid::languageChanged, [&](const QString& newLang) mutable {
         app.removeTranslator(translator);
-
-        if (translator->load(":/i18n/app_" + newLang + ".qm")) {
+        delete translator;
+        translator = new QTranslator(&app);
+        if (translator->load(":/i18n/app_" + newLang + ".qm"))
             app.installTranslator(translator);
-        } 
-        settings.setValue("language", newLang);
 
-        engine.retranslate(); 
+        engine.retranslate();
     });
 
     return app.exec();
