@@ -11,7 +11,7 @@
 class SteamGrid : public QObject {
     Q_OBJECT
     Q_PROPERTY(QVariantList gamesModel READ gamesModel NOTIFY gamesModelChanged)
-    Q_PROPERTY(bool cacheExists READ cacheExistsNOTIFY cacheExistsChanged)
+    Q_PROPERTY(bool cacheExists READ cacheExists NOTIFY cacheExistsChanged)
     Q_PROPERTY(QString apiKey READ apiKey NOTIFY configChanged)
     Q_PROPERTY(QString path READ path NOTIFY configChanged)
     Q_PROPERTY(QVariantList imagesModel READ imagesModel NOTIFY imagesModelChanged)
