@@ -63,6 +63,7 @@ qt_add_qml_module(appSteamUI
         resources/messages_pl.json
         resources/messages_ja.json
         resources/messages_en.json
+        resources/directory.svg
         fonts/Inter.ttf
         fonts/Inter-Bold.ttf
 )

@@ -115,6 +115,7 @@ Window {
                 Layout.preferredWidth: 35
                 Layout.preferredHeight: 35
                 onClicked: dialog.open()
+                iconSource: "qrc:/SteamApp/resources/directory.svg"
             }
         }
 

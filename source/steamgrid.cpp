@@ -167,7 +167,6 @@ void SteamGrid::searchImages(const QString& steamAppId, const QString& type) {
             cpr::Header{{"Authorization", "Bearer " + m_apiKey.toStdString()}}
         );
 
-        qDebug() << "searchImages HTTP" << r.status_code << url.c_str();
 
         QVariantList result;
         if (r.status_code == 200) {
